@@ -1,0 +1,19 @@
+{
+  "name": "s3-multipart",
+  "version": "1.0.0",
+  "description": "Easy multipart uploads to S3 from the browser",
+  "homepage": "https://github.com/perliedman/s3-multipart",
+  "repository": {"type": "git", "url": "https://github.com/perliedman/s3-multipart.git"},
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Per Liedman <per@liedman.net>",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^1.23.1",
+    "rollup-plugin-buble": "^0.19.8"
+  }
+}
