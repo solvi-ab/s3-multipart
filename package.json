@@ -4,7 +4,7 @@
   "description": "Easy multipart uploads to S3 from the browser",
   "homepage": "https://github.com/perliedman/s3-multipart",
   "repository": {"type": "git", "url": "https://github.com/perliedman/s3-multipart.git"},
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
