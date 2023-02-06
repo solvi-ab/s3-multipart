@@ -44,9 +44,7 @@ export default class S3Multipart {
           } else {
             const currentPartNumber = ++partNumber;
             let attempt = 0;
-            tryUpload();
-
-            function tryUpload() {
+            const tryUpload = () => {
               const [xhr, promise] = this.sendPart(
                 uploadId,
                 file,
@@ -77,7 +75,9 @@ export default class S3Multipart {
                     reject(err);
                   }
                 });
-            }
+            };
+
+            tryUpload();
           }
         };
 
