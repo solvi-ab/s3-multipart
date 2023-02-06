@@ -1,6 +1,8 @@
 const defaultOptions = {
   partSize: 5 * 1024 * 1024 * 1024,
   parallelism: 3,
+  retries: 3,
+  retryBackoffTimeMs: (retry) => retry * retry * 1000,
 };
 
 export default class S3Multipart {
@@ -41,27 +43,41 @@ export default class S3Multipart {
             }
           } else {
             const currentPartNumber = ++partNumber;
-            const [xhr, promise] = this.sendPart(
-              uploadId,
-              file,
-              currentPartNumber,
-              onProgress
-            );
-            activeXhr.push(xhr);
+            let attempt = 0;
+            tryUpload();
 
-            promise
-              .then((etag) => (etags[currentPartNumber] = etag))
-              .then(() => {
-                completedParts++;
-                const xhrIndex = activeXhr.indexOf(xhr);
-                activeXhr.splice(xhrIndex, 1);
-                nextPart();
-              })
-              .catch((err) => {
-                const xhrIndex = activeXhr.indexOf(xhr);
-                activeXhr.splice(xhrIndex, 1);
-                reject(err);
-              });
+            function tryUpload() {
+              const [xhr, promise] = this.sendPart(
+                uploadId,
+                file,
+                currentPartNumber,
+                onProgress
+              );
+              activeXhr.push(xhr);
+
+              promise
+                .then((etag) => (etags[currentPartNumber] = etag))
+                .then(() => {
+                  completedParts++;
+                  const xhrIndex = activeXhr.indexOf(xhr);
+                  activeXhr.splice(xhrIndex, 1);
+                  nextPart();
+                })
+                .catch((err) => {
+                  const xhrIndex = activeXhr.indexOf(xhr);
+                  activeXhr.splice(xhrIndex, 1);
+
+                  if (attempt++ < this.options.retries) {
+                    const delay =
+                      typeof this.options.retryBackoffTimeMs === "function"
+                        ? this.options.retryBackoffTimeMs(attempt)
+                        : this.options.retryBackoffTimeMs;
+                    setTimeout(tryUpload, delay);
+                  } else {
+                    reject(err);
+                  }
+                });
+            }
           }
         };
 
