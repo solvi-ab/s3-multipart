@@ -1,9 +1,12 @@
 {
   "name": "s3-multipart",
-  "version": "1.0.1",
+  "version": "1.1.0-0",
   "description": "Easy multipart uploads to S3 from the browser",
   "homepage": "https://github.com/perliedman/s3-multipart",
-  "repository": {"type": "git", "url": "https://github.com/perliedman/s3-multipart.git"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/perliedman/s3-multipart.git"
+  },
   "main": "src/index.js",
   "scripts": {
     "build": "rollup -c",
