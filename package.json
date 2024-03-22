@@ -1,6 +1,6 @@
 {
   "name": "s3-multipart",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Easy multipart uploads to S3 from the browser",
   "homepage": "https://github.com/perliedman/s3-multipart",
   "repository": {
