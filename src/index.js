@@ -81,7 +81,7 @@ export default class S3Multipart {
           }
         };
 
-        for (var i = 0; i < this.options.parallelism; i++) {
+        for (let i = 0; i < this.options.parallelism; i++) {
           nextPart();
         }
       })
@@ -89,8 +89,8 @@ export default class S3Multipart {
           return this.completeUpload(file, uploadId, etags);
         })
         .catch((err) => {
-          for (var i = 0; i < activeXhr.length; i++) {
-            xhr.abort();
+          for (let i = 0; i < activeXhr.length; i++) {
+            activeXhr[i].abort();
           }
           throw err;
         });
