@@ -16,6 +16,9 @@
   "author": "Per Liedman <per@liedman.net>",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
     "rollup": "^1.23.1",
     "rollup-plugin-buble": "^0.19.8"
   }
