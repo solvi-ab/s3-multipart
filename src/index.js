@@ -54,7 +54,7 @@ export default class S3Multipart {
               activeXhr.push(xhr);
 
               promise
-                .then((etag) => (etags[currentPartNumber] = etag))
+                .then((etag) => (etags[currentPartNumber - 1] = etag))
                 .then(() => {
                   completedParts++;
                   const xhrIndex = activeXhr.indexOf(xhr);
